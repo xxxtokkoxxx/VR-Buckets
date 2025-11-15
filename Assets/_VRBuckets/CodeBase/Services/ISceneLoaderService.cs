@@ -2,7 +2,7 @@
 
 namespace _VRBuckets.CodeBase.Services
 {
-    public interface ISceneLoadingService
+    public interface ISceneLoaderService
     {
         UniTask LoadScene(string sceneName);
     }

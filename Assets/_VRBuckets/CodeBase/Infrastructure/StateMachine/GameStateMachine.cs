@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using VContainer.Unity;
 
 namespace _VRBuckets.CodeBase.Infrastructure.StateMachine
 {
-    public class StateMachine : IStateMachine
+    public class GameStateMachine : IGameStateMachine, IInitializable
     {
         private Dictionary<Type, IState> _states;
 
-        public StateMachine()
+        public GameStateMachine()
         {
-
+            UnityEngine.Debug.Log("asd");
         }
 
         public void SetStates(Dictionary<Type, IState> states)
@@ -39,6 +40,11 @@ namespace _VRBuckets.CodeBase.Infrastructure.StateMachine
         private TState GetState<TState>() where TState : class, IState
         {
             return _states[typeof(TState)] as TState;
+        }
+
+        public void Initialize()
+        {
+            UnityEngine.Debug.Log("dsa");
         }
     }
 }

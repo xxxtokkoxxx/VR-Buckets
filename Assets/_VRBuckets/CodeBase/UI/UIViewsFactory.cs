@@ -1,18 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using _VRBuckets.CodeBase.Data;
 using _VRBuckets.CodeBase.Debug;
 using _VRBuckets.CodeBase.Services;
 using Cysharp.Threading.Tasks;
 
 namespace _VRBuckets.CodeBase.UI
 {
-    public class ViewsFactory : IUIViewsFactory
+    public class UIViewsFactory : IUIViewsFactory
     {
-        private AssetLoaderService _loaderService;
+        private IAssetLoaderService _loaderService;
         private IList<IView> _views;
 
-        public ViewsFactory(AssetLoaderService loaderService)
+        public UIViewsFactory(IAssetLoaderService loaderService)
         {
+            UnityEngine.Debug.Log("Creating UI Views Factory");
             _loaderService = loaderService;
         }
 
@@ -24,11 +26,12 @@ namespace _VRBuckets.CodeBase.UI
 
         public IView CreateView(ViewType viewType)
         {
-            IView view = _views.FirstOrDefault(a=>a.ViewType == viewType);
+            IView view = _views.FirstOrDefault(a => a.ViewType == viewType);
 
             if (view == null)
             {
-                AppLogger.LogError(LogCategory.Addressables, $"View {viewType} not found");
+                AppLogger.LogError(LogCategory.UI, $"View {viewType} not found");
+                return null;
             }
 
             return view;

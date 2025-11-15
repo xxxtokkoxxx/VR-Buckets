@@ -1,4 +1,4 @@
-﻿namespace _VRBuckets.CodeBase.Services
+﻿namespace _VRBuckets.CodeBase.Data
 {
     public class AssetsDataPath
     {

@@ -1,8 +1,8 @@
-﻿namespace _VRBuckets.CodeBase.Services
+﻿namespace _VRBuckets.CodeBase.Data
 {
     public class SceneNames
     {
         public const string Initial = "Initial";
-        public const string MainScene = "MainScene";
+        public const string MainMenu = "MainMenu";
     }
 }

@@ -1,9 +1,10 @@
 ﻿namespace _VRBuckets.CodeBase.Debug
 {
-    public enum LogInfo
+    public enum LogCategory
     {
         Network,
         Addressables,
-        Gameplay
+        Gameplay,
+        UI
     }
 }

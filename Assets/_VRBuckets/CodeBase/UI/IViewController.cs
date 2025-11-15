@@ -1,7 +1,8 @@
 ﻿namespace _VRBuckets.CodeBase.UI
 {
-    public interface IUIController
+    public interface IViewController
     {
+        ViewType ViewType { get; }
         void Show();
         void Hide();
     }

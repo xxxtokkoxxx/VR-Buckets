@@ -1,15 +1,10 @@
-﻿namespace _VRBuckets.CodeBase.Infrastructure.StateMachine
-{
-    public interface IStateMachineInitializer
-    {
-        void InitializeStates();
-    }
+﻿using System;
+using System.Collections.Generic;
 
-    public class StateMachineFactory : IStateMachineInitializer
+namespace _VRBuckets.CodeBase.Infrastructure.StateMachine
+{
+    public interface IStatesFactory
     {
-        public void InitializeStates()
-        {
-            IState state =
-        }
+        Dictionary<Type, IState> CreateStates();
     }
 }
