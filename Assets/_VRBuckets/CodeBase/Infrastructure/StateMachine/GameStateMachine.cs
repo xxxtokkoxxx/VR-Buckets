@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using VContainer.Unity;
 
 namespace _VRBuckets.CodeBase.Infrastructure.StateMachine
@@ -20,11 +21,10 @@ namespace _VRBuckets.CodeBase.Infrastructure.StateMachine
 
         public void Enter<TState>(object payload = null) where TState : class, IState
         {
-            TState state = ChangeState<TState>(payload);
-            state.Enter(payload);
+            ChangeState<TState>(payload);
         }
 
-        private TState ChangeState<TState>(object payload) where TState : class, IState
+        private void ChangeState<TState>(object payload) where TState : class, IState
         {
             TState state = GetState<TState>();
 
@@ -34,7 +34,6 @@ namespace _VRBuckets.CodeBase.Infrastructure.StateMachine
             }
 
             state.Enter(payload);
-            return state;
         }
 
         private TState GetState<TState>() where TState : class, IState

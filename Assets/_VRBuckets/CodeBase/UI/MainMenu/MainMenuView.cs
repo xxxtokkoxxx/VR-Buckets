@@ -1,16 +1,33 @@
 ﻿namespace _VRBuckets.CodeBase.UI.MainMenu
 {
-    public class MainMenuView : IView
+    public class MainMenuView : BaseView
     {
-        public ViewType ViewType => ViewType.MainMenu;
-        public void Show()
+        private MainMenuCallbacks _callbacks;
+        public override ViewType ViewType => ViewType.MainMenu;
+
+        public override void Show()
         {
-            throw new System.NotImplementedException();
+
         }
 
-        public void Hide()
+        public override void Hide()
         {
-            throw new System.NotImplementedException();
+
+        }
+
+        public void Initialize(MainMenuCallbacks callbacks)
+        {
+            _callbacks = callbacks;
+        }
+
+        public void StartSinglePlayer()
+        {
+            _callbacks.StartSinglePlayer();
+        }
+
+        public void StartMultiPlayer()
+        {
+            _callbacks.StartMultiPlayer();
         }
     }
 }

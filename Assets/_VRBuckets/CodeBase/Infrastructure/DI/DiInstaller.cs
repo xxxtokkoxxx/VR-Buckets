@@ -2,6 +2,7 @@
 using _VRBuckets.CodeBase.Services;
 using _VRBuckets.CodeBase.UI;
 using _VRBuckets.CodeBase.UI.MainMenu;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -9,6 +10,8 @@ namespace _VRBuckets.CodeBase.Infrastructure.DI
 {
     public class DiInstaller : LifetimeScope
     {
+        [SerializeField] private MonoBehavioursProvider _monoBehavioursProvider;
+
         protected override void Configure(IContainerBuilder builder)
         {
             builder.Register<IAssetLoaderService, AssetLoaderService>(Lifetime.Singleton);
@@ -19,7 +22,7 @@ namespace _VRBuckets.CodeBase.Infrastructure.DI
             builder.Register<IUIService, UIService>(Lifetime.Singleton);
             builder.Register<IViewController, MainMenuController>(Lifetime.Singleton);
 
-            UnityEngine.Debug.Log("Configue");
+            builder.RegisterComponent(_monoBehavioursProvider).AsImplementedInterfaces();
         }
     }
 }
