@@ -1,4 +1,7 @@
-﻿using _VRBuckets.CodeBase.Infrastructure.StateMachine;
+﻿using _VRBuckets.CodeBase.GamePlay.Ball;
+using _VRBuckets.CodeBase.GamePlay.Bucket;
+using _VRBuckets.CodeBase.GamePlay.Environment;
+using _VRBuckets.CodeBase.Infrastructure.StateMachine;
 using _VRBuckets.CodeBase.Services;
 using _VRBuckets.CodeBase.UI;
 using _VRBuckets.CodeBase.UI.MainMenu;
@@ -21,6 +24,9 @@ namespace _VRBuckets.CodeBase.Infrastructure.DI
             builder.Register<IGameStateMachine, GameStateMachine>(Lifetime.Singleton);
             builder.Register<IUIService, UIService>(Lifetime.Singleton);
             builder.Register<IViewController, MainMenuController>(Lifetime.Singleton);
+            builder.Register<IBallFactory, BallFactory>(Lifetime.Singleton);
+            builder.Register<IHoopFactory, HoopFactory>(Lifetime.Singleton);
+            builder.Register<IEnvironmentFactory, EnvironmentFactory>(Lifetime.Singleton);
 
             builder.RegisterComponent(_monoBehavioursProvider).AsImplementedInterfaces();
         }
