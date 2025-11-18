@@ -1,10 +1,12 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 
 namespace _VRBuckets.CodeBase.UI
 {
     public interface IUIViewsFactory
     {
         UniTask LoadViews();
-        IView CreateView(ViewType viewType);
+        TView CreateView<TView>(ViewType viewType) where TView : BaseView;
+        void DestroyView(Guid id);
     }
 }
