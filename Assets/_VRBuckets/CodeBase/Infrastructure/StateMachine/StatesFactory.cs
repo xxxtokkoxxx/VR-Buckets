@@ -44,13 +44,13 @@ namespace _VRBuckets.CodeBase.Infrastructure.StateMachine
         {
             IState bootstrapState = new BootstrapState(_uiViewsFactory, _uiService, _viewControllers, _gameStateMachine);
             IState menuState = new MainMenuState(_sceneLoaderService, _uiService);
-            IState prepareGameState = new PrepareGameState(_environmentFactory, _ballFactory, _hoopFactory);
+            IState prepareGameState = new GamePreparationState(_environmentFactory, _ballFactory, _hoopFactory, _sceneLoaderService);
 
             Dictionary<Type, IState> states = new Dictionary<Type, IState>()
             {
                 {typeof(BootstrapState), bootstrapState},
                 {typeof(MainMenuState), menuState},
-                {typeof(PrepareGameState), prepareGameState}
+                {typeof(GamePreparationState), prepareGameState}
             };
 
             return states;
