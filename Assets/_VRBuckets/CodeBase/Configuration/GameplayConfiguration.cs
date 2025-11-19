@@ -1,6 +1,6 @@
 namespace _VRBuckets.CodeBase.Configuration
 {
-    public class GamePlayConfiguration
+    public class GameplayConfiguration
     {
         public float MatchTIme { get; set; }
         public int ScoresToWIn { get; set; }

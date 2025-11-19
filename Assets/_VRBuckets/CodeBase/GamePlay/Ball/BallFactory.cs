@@ -11,7 +11,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Ball
     {
         private readonly IAssetLoaderService _assetLoaderService;
         private BallView _ballReference;
-        private List<BallView> _ballPool = new();
+        private List<BallView> _createdBalls = new();
         private int _ballPoolSize = 5;
         private int _poolIndex;
 
@@ -32,10 +32,10 @@ namespace _VRBuckets.CodeBase.GamePlay.Ball
 
         public BallView CreateBall(Transform position)
         {
-            if (_ballPool.Count < _ballPoolSize)
+            if (_createdBalls.Count < _ballPoolSize)
             {
                 BallView ball = Create(_ballReference, position);
-                _ballPool.Add(ball);
+                _createdBalls.Add(ball);
             }
             else
             {
@@ -44,10 +44,12 @@ namespace _VRBuckets.CodeBase.GamePlay.Ball
                     _poolIndex = 0;
                 }
 
-                return _ballPool[_poolIndex++];
+                return _createdBalls[_poolIndex++];
             }
 
             return Create(_ballReference, position);
         }
+
+        public List<BallView> GetCreatedBalls() => _createdBalls;
     }
 }

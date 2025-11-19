@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using _VRBuckets.CodeBase.Data;
 using _VRBuckets.CodeBase.Infrastructure.Factory;
 using _VRBuckets.CodeBase.Services;
@@ -41,6 +43,18 @@ namespace _VRBuckets.CodeBase.GamePlay.Environment
             _createdCourts.Clear();
 
             _assetLoaderService.Release(_courtViewReference);
+        }
+
+        public BasketballCourtView GetCourt(Guid playerId)
+        {
+            BasketballCourtView court = _createdCourts.FirstOrDefault(a=>a.PlayerId == playerId);
+
+            if (court == null)
+            {
+                throw new NullReferenceException("Couldn't find court for player " + playerId);
+            }
+
+            return court;
         }
     }
 }

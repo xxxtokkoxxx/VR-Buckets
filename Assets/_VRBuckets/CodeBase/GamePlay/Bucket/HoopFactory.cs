@@ -26,7 +26,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Bucket
             _hoopReference = await _assetLoaderService.LoadAsset<HoopView>(AssetsDataPath.Hoop);
         }
 
-        public HoopView CreateBucket(Transform position)
+        public HoopView CreateHoop(Transform position)
         {
             if (_bucketsPool.Count < _poolSize)
             {

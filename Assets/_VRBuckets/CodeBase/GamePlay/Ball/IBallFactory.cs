@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _VRBuckets.CodeBase.GamePlay.Ball
@@ -8,5 +9,6 @@ namespace _VRBuckets.CodeBase.GamePlay.Ball
         UniTask LoadBallReference();
         BallView CreateBall(Transform position);
         void SetPoolSize(int poolSize);
+        List<BallView> GetCreatedBalls();
     }
 }

@@ -6,7 +6,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Bucket
     public interface IHoopFactory
     {
         UniTask LoadHoopReference();
-        HoopView CreateBucket(Transform position);
+        HoopView CreateHoop(Transform position);
         void SetPoolSize(int poolSize);
     }
 }
