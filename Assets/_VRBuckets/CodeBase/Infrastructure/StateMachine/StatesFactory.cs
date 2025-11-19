@@ -37,20 +37,22 @@ namespace _VRBuckets.CodeBase.Infrastructure.StateMachine
             _environmentFactory = environmentFactory;
             _ballFactory = ballFactory;
             _hoopFactory = hoopFactory;
-            _viewControllers = (IViewController[]) viewControllers;
+            _viewControllers = (IViewController[])viewControllers;
         }
 
         public Dictionary<Type, IState> CreateStates()
         {
-            IState bootstrapState = new BootstrapState(_uiViewsFactory, _uiService, _viewControllers, _gameStateMachine);
+            IState bootstrapState =
+                new BootstrapState(_uiViewsFactory, _uiService, _viewControllers, _gameStateMachine);
             IState menuState = new MainMenuState(_sceneLoaderService, _uiService);
-            IState prepareGameState = new GamePreparationState(_environmentFactory, _ballFactory, _hoopFactory, _sceneLoaderService);
+            IState prepareGameState =
+                new GamePreparationState(_environmentFactory, _ballFactory, _hoopFactory, _sceneLoaderService);
 
             Dictionary<Type, IState> states = new Dictionary<Type, IState>()
             {
-                {typeof(BootstrapState), bootstrapState},
-                {typeof(MainMenuState), menuState},
-                {typeof(GamePreparationState), prepareGameState}
+                { typeof(BootstrapState), bootstrapState },
+                { typeof(MainMenuState), menuState },
+                { typeof(GamePreparationState), prepareGameState }
             };
 
             return states;
