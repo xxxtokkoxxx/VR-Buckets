@@ -8,12 +8,7 @@ namespace _VRBuckets.CodeBase.Infrastructure.StateMachine
     public class GameStateMachine : IGameStateMachine, IInitializable
     {
         private Dictionary<Type, IState> _states;
-
-        public GameStateMachine()
-        {
-            UnityEngine.Debug.Log("asd");
-        }
-
+        
         public void SetStates(Dictionary<Type, IState> states)
         {
             _states = states;

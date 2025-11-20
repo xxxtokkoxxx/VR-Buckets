@@ -1,5 +1,7 @@
 ﻿using _VRBuckets.CodeBase.GamePlay.Ball;
 using _VRBuckets.CodeBase.GamePlay.Bucket;
+using _VRBuckets.CodeBase.GamePlay.Core.GameFlow;
+using _VRBuckets.CodeBase.GamePlay.Core.Preparation;
 using _VRBuckets.CodeBase.GamePlay.Environment;
 using _VRBuckets.CodeBase.Infrastructure.StateMachine;
 using _VRBuckets.CodeBase.Services;
@@ -20,13 +22,17 @@ namespace _VRBuckets.CodeBase.Infrastructure.DI
             builder.Register<IAssetLoaderService, AssetLoaderService>(Lifetime.Singleton);
             builder.Register<ISceneLoaderService, SceneLoaderService>(Lifetime.Singleton);
             builder.Register<IUIViewsFactory, UIViewsFactory>(Lifetime.Singleton);
-            builder.Register<IStatesFactory, StatesFactory>(Lifetime.Singleton);
+            builder.Register<IStatesFactory, StatesProvider>(Lifetime.Singleton);
             builder.Register<IGameStateMachine, GameStateMachine>(Lifetime.Singleton);
             builder.Register<IUIService, UIService>(Lifetime.Singleton);
             builder.Register<IViewController, MainMenuController>(Lifetime.Singleton);
             builder.Register<IBallFactory, BallFactory>(Lifetime.Singleton);
             builder.Register<IHoopFactory, HoopFactory>(Lifetime.Singleton);
             builder.Register<IEnvironmentFactory, EnvironmentFactory>(Lifetime.Singleton);
+            builder.Register<IState, BootstrapState>(Lifetime.Singleton);
+            builder.Register<IState, MainMenuState>(Lifetime.Singleton);
+            builder.Register<IState, GamePreparationState>(Lifetime.Singleton);
+            builder.Register<IState, GameState>(Lifetime.Singleton);
 
             builder.RegisterComponent(_monoBehavioursProvider).AsImplementedInterfaces();
         }

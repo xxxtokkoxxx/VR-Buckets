@@ -51,12 +51,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Core.GameFlow
 
             _hoopFactory.CreateHoop(hoopSpawnPoint);
         }
-
-        private void SpawnBall()
-        {
-
-        }
-
+        
         private bool CheckIfPlayerWin(PlayerEntity playerEntity)
         {
             bool playerWin = playerEntity.Score >= _gameplayConfiguration.ScoresToWIn;

@@ -1,4 +1,5 @@
 ﻿using System;
+using _VRBuckets.CodeBase.GamePlay.Ball;
 using _VRBuckets.CodeBase.GamePlay.Core.GameFlow;
 using UnityEngine;
 using VContainer;
