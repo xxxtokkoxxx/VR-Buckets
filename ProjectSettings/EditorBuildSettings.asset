@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_VRBuckets/Scenes/MainMenu.unity
     guid: 2be46cfc8f2856e4281fdba5b400fe9b
+  - enabled: 1
+    path: Assets/_VRBuckets/Scenes/Game.unity
+    guid: 80ff44268f5db0c4f8ce50ad59672436
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260, type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: dc5a169419fa04987b057f65238cf3ba, type: 2}

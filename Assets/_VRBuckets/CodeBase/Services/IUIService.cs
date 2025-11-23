@@ -7,5 +7,6 @@ namespace _VRBuckets.CodeBase.Services
         void Initialize(IViewController[] viewControllers);
         void Show(ViewType viewType);
         void Hide(ViewType viewType);
+        void HideAll();
     }
 }

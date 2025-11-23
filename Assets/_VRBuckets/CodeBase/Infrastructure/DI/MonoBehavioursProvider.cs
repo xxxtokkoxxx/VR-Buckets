@@ -6,8 +6,10 @@ namespace _VRBuckets.CodeBase.Infrastructure.DI
     {
         [SerializeField] private Transform _uiViewsParent;
         [SerializeField] private Camera _userMainCamera;
-        public Transform UIViewsParent => _uiViewsParent;
+        [SerializeField] private Transform _groundTransform;
 
+        public Transform UIViewsParent => _uiViewsParent;
         public Camera UserCameraTransform => _userMainCamera;
+        public Transform GroundTransform => _groundTransform;
     }
 }

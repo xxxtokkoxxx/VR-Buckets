@@ -1,5 +1,6 @@
-﻿using System.Linq;
-using _VRBuckets.CodeBase.Debug;
+﻿using System.Collections.Generic;
+using System.Linq;
+using _VRBuckets.CodeBase.Logging;
 using _VRBuckets.CodeBase.UI;
 
 namespace _VRBuckets.CodeBase.Services
@@ -7,6 +8,7 @@ namespace _VRBuckets.CodeBase.Services
     public class UIService : IUIService
     {
         private IViewController[] _controllers;
+        private List<IViewController> _activeControllers = new();
 
         public void Initialize(IViewController[] viewControllers)
         {
@@ -16,13 +18,25 @@ namespace _VRBuckets.CodeBase.Services
         public void Show(ViewType viewType)
         {
             IViewController controller = GetUiController(viewType);
+            _activeControllers.Add(controller);
             controller.Show();
         }
 
         public void Hide(ViewType viewType)
         {
             IViewController controller = GetUiController(viewType);
+            _activeControllers.Remove(controller);
             controller.Hide();
+        }
+
+        public void HideAll()
+        {
+            foreach (IViewController controller in _activeControllers)
+            {
+                controller.Hide();
+            }
+
+            _activeControllers.Clear();
         }
 
         private IViewController GetUiController(ViewType viewType)
