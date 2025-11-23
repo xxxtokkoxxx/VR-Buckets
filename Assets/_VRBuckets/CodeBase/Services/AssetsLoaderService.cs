@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using _VRBuckets.CodeBase.Data;
-using _VRBuckets.CodeBase.Debug;
+using _VRBuckets.CodeBase.Logging;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -120,7 +120,7 @@ namespace _VRBuckets.CodeBase.Services
         {
             foreach (LoadedAsset cache in _cache)
             {
-                Release(cache.Handle);
+                ReleaseInternal(cache.Handle);
             }
 
             _cache.Clear();
@@ -133,7 +133,7 @@ namespace _VRBuckets.CodeBase.Services
             if (objectToRelease == null)
                 return;
 
-            Release(objectToRelease.LoadedObject);
+            ReleaseInternal(objectToRelease.Handle);
             _cache.Remove(objectToRelease);
         }
 
@@ -146,7 +146,7 @@ namespace _VRBuckets.CodeBase.Services
                 return;
             }
 
-            Release(objectToRelease.LoadedObject);
+            ReleaseInternal(objectToRelease.Handle);
             _cache.Remove(objectToRelease);
         }
 
@@ -196,7 +196,7 @@ namespace _VRBuckets.CodeBase.Services
             return loadedLocationsReturn;
         }
 
-        private void Release(AsyncOperationHandle handle)
+        private void ReleaseInternal(AsyncOperationHandle handle)
         {
             try
             {

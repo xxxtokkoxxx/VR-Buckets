@@ -42,6 +42,10 @@ namespace _VRBuckets.CodeBase.GamePlay.Environment
                         _currentHoopSpawnIndex++;
                     }
                 }
+                else
+                {
+                    _currentHoopSpawnIndex = index;
+                }
             }
 
             Transform hoop = _hoopSpawnPoints[_currentHoopSpawnIndex];

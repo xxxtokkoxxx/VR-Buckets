@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _VRBuckets.CodeBase.GamePlay.Bucket
@@ -6,7 +7,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Bucket
     public interface IHoopFactory
     {
         UniTask LoadHoopReference();
-        HoopView CreateHoop(Transform position);
-        void SetPoolSize(int poolSize);
+        HoopView CreateHoop(Transform parent, Guid playerId);
+        void Release();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _VRBuckets.CodeBase.Data;
 using _VRBuckets.CodeBase.Infrastructure.Factory;
 using _VRBuckets.CodeBase.Services;
@@ -12,8 +13,6 @@ namespace _VRBuckets.CodeBase.GamePlay.Ball
         private readonly IAssetLoaderService _assetLoaderService;
         private BallView _ballReference;
         private List<BallView> _createdBalls = new();
-        private int _ballPoolSize = 5;
-        private int _poolIndex;
 
         public BallFactory(IAssetLoaderService assetLoaderService)
         {
@@ -22,34 +21,22 @@ namespace _VRBuckets.CodeBase.GamePlay.Ball
 
         public async UniTask LoadBallReference()
         {
-            _ballReference = await _assetLoaderService.LoadAsset<BallView>(AssetsDataPath.Ball);
+            _ballReference = await _assetLoaderService.LoadPrefab<BallView>(AssetsDataPath.Ball);
         }
 
-        public void SetPoolSize(int poolSize)
+        public BallView CreateBall(Transform position, Guid playerId)
         {
-            _ballPoolSize = poolSize;
-        }
+            BallView ball = Create(_ballReference, position);
+            ball.Initialize(playerId);
+            _createdBalls.Add(ball);
 
-        public BallView CreateBall(Transform position)
-        {
-            if (_createdBalls.Count < _ballPoolSize)
-            {
-                BallView ball = Create(_ballReference, position);
-                _createdBalls.Add(ball);
-            }
-            else
-            {
-                if (_poolIndex >= _ballPoolSize)
-                {
-                    _poolIndex = 0;
-                }
-
-                return _createdBalls[_poolIndex++];
-            }
-
-            return Create(_ballReference, position);
+            return ball;
         }
 
         public List<BallView> GetCreatedBalls() => _createdBalls;
+        public void Release()
+        {
+            _assetLoaderService.Release(_ballReference);
+        }
     }
 }

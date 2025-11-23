@@ -1,33 +1,46 @@
-﻿namespace _VRBuckets.CodeBase.UI.MainMenu
+﻿using _VRBuckets.CodeBase.GamePlay.Core.Preparation;
+using _VRBuckets.CodeBase.Infrastructure.DI;
+using _VRBuckets.CodeBase.Infrastructure.StateMachine;
+using UnityEngine;
+
+namespace _VRBuckets.CodeBase.UI.MainMenu
 {
-    public class MainMenuController : IViewController
+    public class MainMenuController : BaseUiController<MainMenuView>, IViewController
     {
-        private MainMenuView _view;
         private MainMenuCallbacks _callbacks;
         private readonly IUIViewsFactory _viewsFactory;
+        private readonly IMonoBehaviourProvider _monoBehaviourProvider;
+        private readonly IGameStateMachine _gameStateMachine;
         private bool _subscribed;
 
-        public MainMenuController(IUIViewsFactory viewsFactory)
+        public MainMenuController(IUIViewsFactory viewsFactory,
+            IMonoBehaviourProvider monoBehaviourProvider,
+            IGameStateMachine gameStateMachine)
         {
             _viewsFactory = viewsFactory;
+            _monoBehaviourProvider = monoBehaviourProvider;
+            _gameStateMachine = gameStateMachine;
         }
 
-        public ViewType ViewType => ViewType.MainMenu;
+        public override ViewType ViewType => ViewType.MainMenu;
 
-        public void Show()
+        public override void Show()
         {
             Subscribe();
-            if (_view == null)
+
+            if (View == null)
             {
-                _view = _viewsFactory.CreateView<MainMenuView>(ViewType.MainMenu);
-                _view.Initialize(_callbacks);
+                View = _viewsFactory.CreateView<MainMenuView>(ViewType.MainMenu);
+                View.Initialize(_callbacks);
             }
+
+            PlaceViewInFrontOfTarget(_monoBehaviourProvider.UserCameraTransform.transform);
         }
 
-        public void Hide()
+        public override void Hide()
         {
             Unsubscribe();
-            _viewsFactory.DestroyView(_view.Id);
+            _viewsFactory.DestroyView(View.Id);
         }
 
         private void Subscribe()
@@ -52,17 +65,17 @@
         {
             _callbacks.OnStartMultiPlayer -= OnStartMultiPlayer;
             _callbacks.OnStartSinglePlayer -= OnStartSinglePlayer;
-            _subscribed = true;
+            _subscribed = false;
         }
 
         private void OnStartSinglePlayer()
         {
-            UnityEngine.Debug.Log("OnStartSinglePlayer");
+            _gameStateMachine.Enter<GamePreparationState>();
         }
 
         private void OnStartMultiPlayer()
         {
-            UnityEngine.Debug.Log("OnStartSinglePlayer");
+            Debug.Log("OnStartMultiPlayer");
         }
     }
 }

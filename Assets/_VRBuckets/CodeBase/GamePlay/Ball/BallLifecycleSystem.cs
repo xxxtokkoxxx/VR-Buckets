@@ -5,7 +5,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Ball
 {
     public class BallLifecycleSystem : ITickable, IBallLifecycleSystem
     {
-        private float _timeToResetBall;
+        private float _timeToResetBall = 5;
         private readonly IBallFactory _ballFactory;
 
         public BallLifecycleSystem(IBallFactory ballFactory)
@@ -20,7 +20,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Ball
                 if (ball.BallState == BallState.NotControlled)
                 {
                     ball.ReleasedTime += Time.deltaTime;
-
+                    Debug.Log(ball.ReleasedTime);
                     if (ball.ReleasedTime > _timeToResetBall)
                     {
                         ball.SetBallState(BallState.Idle);
@@ -35,6 +35,15 @@ namespace _VRBuckets.CodeBase.GamePlay.Ball
             {
                 ballView.Interactable.selectEntered.AddListener(_ => BallSelectEnter(ballView));
                 ballView.Interactable.selectExited.AddListener(_ => BallSelectExit(ballView));
+            }
+        }
+
+        public void CleanUpBallsListener()
+        {
+            foreach (BallView ballView in _ballFactory.GetCreatedBalls())
+            {
+                ballView.Interactable.selectEntered.RemoveAllListeners();
+                ballView.Interactable.selectExited.RemoveAllListeners();
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
@@ -8,8 +9,9 @@ namespace _VRBuckets.CodeBase.GamePlay.Ball
     {
         private Vector3 _startPosition;
         private Quaternion _startRotation;
-        
+
         [SerializeField] private XRBaseInteractable _interactable;
+        [SerializeField] private Rigidbody _rigidbody;
 
         public int BounceCount { get; private set; }
         public Guid PlayerId { get; private set; }
@@ -24,17 +26,23 @@ namespace _VRBuckets.CodeBase.GamePlay.Ball
             _startRotation = transform.localRotation;
         }
 
+        [Button]
         public void SetBallState(BallState ballState)
         {
             BallState = ballState;
-            
+            Debug.Log("set ball state " + ballState);
             switch (ballState)
             {
                 case BallState.Idle:
                     ResetPosition();
+                    // _rigidbody.Sleep();
                     break;
                 case BallState.Controlled:
                     ReleasedTime = 0;
+                    // _rigidbody.Sleep();
+                    break;
+                case BallState.NotControlled:
+                    // _rigidbody.WakeUp();
                     break;
             }
         }

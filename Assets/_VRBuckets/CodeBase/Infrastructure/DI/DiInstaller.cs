@@ -1,11 +1,15 @@
-﻿using _VRBuckets.CodeBase.GamePlay.Ball;
+﻿using _VRBuckets.CodeBase.Configuration;
+using _VRBuckets.CodeBase.GamePlay.Ball;
 using _VRBuckets.CodeBase.GamePlay.Bucket;
 using _VRBuckets.CodeBase.GamePlay.Core.GameFlow;
 using _VRBuckets.CodeBase.GamePlay.Core.Preparation;
+using _VRBuckets.CodeBase.GamePlay.Data;
 using _VRBuckets.CodeBase.GamePlay.Environment;
+using _VRBuckets.CodeBase.GamePlay.Player;
 using _VRBuckets.CodeBase.Infrastructure.StateMachine;
 using _VRBuckets.CodeBase.Services;
 using _VRBuckets.CodeBase.UI;
+using _VRBuckets.CodeBase.UI.GameOver;
 using _VRBuckets.CodeBase.UI.MainMenu;
 using UnityEngine;
 using VContainer;
@@ -33,6 +37,13 @@ namespace _VRBuckets.CodeBase.Infrastructure.DI
             builder.Register<IState, MainMenuState>(Lifetime.Singleton);
             builder.Register<IState, GamePreparationState>(Lifetime.Singleton);
             builder.Register<IState, GameState>(Lifetime.Singleton);
+            builder.Register<IGameSession, GameSession>(Lifetime.Singleton);
+            builder.Register<IGameplayProcessor, GameplayProcessor>(Lifetime.Singleton);
+            builder.Register<IGameplayConfiguration, GameplayConfiguration>(Lifetime.Singleton);
+            builder.Register<IPlayersContainer, PlayersContainer>(Lifetime.Singleton);
+            builder.Register<IGameResultsContainer, GameResultsContainer>(Lifetime.Singleton);
+            builder.Register<IViewController, GameOverController>(Lifetime.Singleton);
+            builder.Register<IBallLifecycleSystem, ITickable, BallLifecycleSystem>(Lifetime.Singleton);
 
             builder.RegisterComponent(_monoBehavioursProvider).AsImplementedInterfaces();
         }

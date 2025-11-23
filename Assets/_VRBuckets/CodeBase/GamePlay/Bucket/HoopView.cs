@@ -1,6 +1,7 @@
 ﻿using System;
 using _VRBuckets.CodeBase.GamePlay.Ball;
 using _VRBuckets.CodeBase.GamePlay.Core.GameFlow;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
 
@@ -12,6 +13,8 @@ namespace _VRBuckets.CodeBase.GamePlay.Bucket
         private IGameplayProcessor _gameplayProcessor;
         private int _minScoreValue = 1;
 
+        public Guid PlayerId => _playerId;
+
         [Inject]
         public void Inject(IGameplayProcessor gameplayProcessor)
         {
@@ -20,17 +23,33 @@ namespace _VRBuckets.CodeBase.GamePlay.Bucket
 
         public void Initialize(Guid playerId)
         {
-            playerId = playerId;
+            _playerId = playerId;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            bool componentExists = other.TryGetComponent(out BallView ballView);
+            Debug.Log("trigger enter " + other.gameObject.name);
+            bool componentExists = other.gameObject.TryGetComponent(out BallView ballView);
 
-            if (componentExists && ballView.PlayerId == _playerId)
+            if (_playerId != Guid.Empty && componentExists && ballView.PlayerId == _playerId)
             {
                 _gameplayProcessor.EnrollScore(_playerId, _minScoreValue);
             }
         }
+
+#if UNITY_EDITOR
+
+        [Button]
+        private void EnrollScore()
+        {
+            _gameplayProcessor.EnrollScore(_playerId, _minScoreValue);
+        }
+
+        [Button]
+        private void EnrollMaxScore()
+        {
+            _gameplayProcessor.EnrollScore(_playerId, int.MaxValue);
+        }
+#endif
     }
 }
