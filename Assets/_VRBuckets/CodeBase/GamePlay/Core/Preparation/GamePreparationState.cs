@@ -33,7 +33,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Core.Preparation
             _gameplayConfiguration = gameplayConfiguration;
         }
 
-        public async void Enter(object payload)
+        public async UniTask Enter(object payload)
         {
             _uiService.HideAll();
             await LoadEnvironment();

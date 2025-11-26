@@ -15,21 +15,21 @@ namespace _VRBuckets.CodeBase.Infrastructure.StateMachine
             _states = states;
         }
 
-        public void Enter<TState>(object payload = null) where TState : class, IState
+        public async UniTask Enter<TState>(object payload = null) where TState : class, IState
         {
-            ChangeState<TState>(payload);
+            await ChangeState<TState>(payload);
         }
 
-        private void ChangeState<TState>(object payload) where TState : class, IState
+        private async UniTask ChangeState<TState>(object payload) where TState : class, IState
         {
             TState state = GetState<TState>();
 
             if (_previousState is IExitState exitState)
             {
-                exitState.Exit();
+                await exitState.Exit();
             }
 
-            state.Enter(payload);
+            await state.Enter(payload);
             _previousState = state;
         }
 

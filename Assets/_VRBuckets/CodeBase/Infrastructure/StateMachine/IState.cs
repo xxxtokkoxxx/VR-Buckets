@@ -1,7 +1,9 @@
-﻿namespace _VRBuckets.CodeBase.Infrastructure.StateMachine
+﻿using Cysharp.Threading.Tasks;
+
+namespace _VRBuckets.CodeBase.Infrastructure.StateMachine
 {
     public interface IState
     {
-        void Enter(object payload);
+        UniTask Enter(object payload = null);
     }
 }

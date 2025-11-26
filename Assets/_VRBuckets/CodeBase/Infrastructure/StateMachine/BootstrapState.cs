@@ -2,6 +2,7 @@
 using System.Linq;
 using _VRBuckets.CodeBase.Services;
 using _VRBuckets.CodeBase.UI;
+using Cysharp.Threading.Tasks;
 
 namespace _VRBuckets.CodeBase.Infrastructure.StateMachine
 {
@@ -23,7 +24,7 @@ namespace _VRBuckets.CodeBase.Infrastructure.StateMachine
             _stateMachine = stateMachine;
         }
 
-        public async void Enter(object payload)
+        public async UniTask Enter(object payload)
         {
             _uiService.Initialize(_viewControllers.ToArray());
             await _uiViewsFactory.LoadViews();

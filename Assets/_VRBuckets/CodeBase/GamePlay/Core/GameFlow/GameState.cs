@@ -4,6 +4,7 @@ using _VRBuckets.CodeBase.GamePlay.Environment;
 using _VRBuckets.CodeBase.GamePlay.Player;
 using _VRBuckets.CodeBase.Infrastructure.StateMachine;
 using _VRBuckets.CodeBase.Services;
+using Cysharp.Threading.Tasks;
 
 namespace _VRBuckets.CodeBase.GamePlay.Core.GameFlow
 {
@@ -27,18 +28,21 @@ namespace _VRBuckets.CodeBase.GamePlay.Core.GameFlow
             _playersContainer = playersContainer;
         }
 
-        public void Enter(object payload)
+        public UniTask Enter(object payload)
         {
             _gameSession.StartGame();
+            return UniTask.CompletedTask;
         }
 
-        public void Exit()
+        public UniTask Exit()
         {
             _ballFactory.Release();
             _environmentFactory.Release();
             _hoopFactory.Release();
             _uiService.HideAll();
             _playersContainer.ClearPlayers();
+
+            return UniTask.CompletedTask;
         }
     }
 }

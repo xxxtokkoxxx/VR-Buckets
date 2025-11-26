@@ -1,6 +1,7 @@
 ﻿using _VRBuckets.CodeBase.Data;
 using _VRBuckets.CodeBase.Services;
 using _VRBuckets.CodeBase.UI;
+using Cysharp.Threading.Tasks;
 
 namespace _VRBuckets.CodeBase.Infrastructure.StateMachine
 {
@@ -15,10 +16,11 @@ namespace _VRBuckets.CodeBase.Infrastructure.StateMachine
             _uiService = uiService;
         }
 
-        public void Enter(object payload)
+        public UniTask Enter(object payload)
         {
             _sceneLoaderService.LoadScene(SceneNames.MainMenu);
             _uiService.Show(ViewType.MainMenu);
+            return UniTask.CompletedTask;
         }
     }
 }
