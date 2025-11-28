@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using VContainer.Unity;
 
 namespace _VRBuckets.CodeBase.Infrastructure.StateMachine
 {

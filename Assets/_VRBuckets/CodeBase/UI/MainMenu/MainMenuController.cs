@@ -1,25 +1,34 @@
-﻿using _VRBuckets.CodeBase.GamePlay.Core.Preparation;
+﻿using System;
+using System.Threading;
+using _VRBuckets.CodeBase.GamePlay.Core.Preparation;
 using _VRBuckets.CodeBase.Infrastructure.DI;
 using _VRBuckets.CodeBase.Infrastructure.StateMachine;
-using UnityEngine;
+using _VRBuckets.CodeBase.Logging;
+using _VRBuckets.CodeBase.Network.Connection;
 
 namespace _VRBuckets.CodeBase.UI.MainMenu
 {
     public class MainMenuController : BaseUiController<MainMenuView>, IViewController
     {
+        private bool _subscribed;
+
         private MainMenuCallbacks _callbacks;
+        private CancellationTokenSource _cancellationToken = new();
+
         private readonly IUIViewsFactory _viewsFactory;
         private readonly IMonoBehaviourProvider _monoBehaviourProvider;
         private readonly IGameStateMachine _gameStateMachine;
-        private bool _subscribed;
+        private readonly INetworkConnectionRunner _networkConnectionRunner;
 
         public MainMenuController(IUIViewsFactory viewsFactory,
             IMonoBehaviourProvider monoBehaviourProvider,
-            IGameStateMachine gameStateMachine)
+            IGameStateMachine gameStateMachine,
+            INetworkConnectionRunner networkConnectionRunner)
         {
             _viewsFactory = viewsFactory;
             _monoBehaviourProvider = monoBehaviourProvider;
             _gameStateMachine = gameStateMachine;
+            _networkConnectionRunner = networkConnectionRunner;
         }
 
         public override ViewType ViewType => ViewType.MainMenu;
@@ -68,14 +77,25 @@ namespace _VRBuckets.CodeBase.UI.MainMenu
             _subscribed = false;
         }
 
-        private void OnStartSinglePlayer()
+        private async void OnStartSinglePlayer()
         {
-            _gameStateMachine.Enter<GamePreparationState>();
+            await _gameStateMachine.Enter<GamePreparationState>();
         }
 
-        private void OnStartMultiPlayer()
+        private async void OnStartMultiPlayer()
         {
-            Debug.Log("OnStartMultiPlayer");
+            try
+            {
+                await _networkConnectionRunner.Connect(_cancellationToken.Token);
+            }
+            catch (Exception e)
+            {
+                AppLogger.LogError(LogCategory.Network, e.Message);
+            }
+            finally
+            {
+                _cancellationToken.Dispose();
+            }
         }
     }
 }

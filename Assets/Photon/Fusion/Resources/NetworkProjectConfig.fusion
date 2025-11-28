@@ -83,7 +83,8 @@
         "XRHandsSynchronization",
         "XRShared.BaseRig",
         "XRShared.Core",
-        "XRShared.XRHands"
+        "XRShared.XRHands",
+        "XRShared.XRIT"
     ],
     "UseSerializableDictionary": true,
     "NullChecksForNetworkedProperties": true,

@@ -6,6 +6,7 @@ using _VRBuckets.CodeBase.GamePlay.Data;
 using _VRBuckets.CodeBase.GamePlay.Environment;
 using _VRBuckets.CodeBase.GamePlay.Player;
 using _VRBuckets.CodeBase.Infrastructure.DI;
+using _VRBuckets.CodeBase.Network.Player;
 using _VRBuckets.CodeBase.Services;
 using _VRBuckets.CodeBase.UI;
 

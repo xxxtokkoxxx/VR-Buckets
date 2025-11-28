@@ -10,6 +10,7 @@
         public const string ResourceLocation = "ResourceLocation_";
         public const string PlayerAvatar = "PlayerAvatar";
         public const string GameConfig = "GameConfig";
+        public const string NetworkConfiguration = "NetworkConfiguration";
 
         #endregion
 

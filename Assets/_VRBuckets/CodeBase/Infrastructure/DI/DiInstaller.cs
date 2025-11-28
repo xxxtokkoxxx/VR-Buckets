@@ -7,10 +7,13 @@ using _VRBuckets.CodeBase.GamePlay.Data;
 using _VRBuckets.CodeBase.GamePlay.Environment;
 using _VRBuckets.CodeBase.GamePlay.Player;
 using _VRBuckets.CodeBase.Infrastructure.StateMachine;
+using _VRBuckets.CodeBase.Network.Configuration;
+using _VRBuckets.CodeBase.Network.Connection;
 using _VRBuckets.CodeBase.Services;
 using _VRBuckets.CodeBase.UI;
 using _VRBuckets.CodeBase.UI.GameOver;
 using _VRBuckets.CodeBase.UI.MainMenu;
+using Fusion;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -44,6 +47,9 @@ namespace _VRBuckets.CodeBase.Infrastructure.DI
             builder.Register<IGameResultsContainer, GameResultsContainer>(Lifetime.Singleton);
             builder.Register<IViewController, GameOverController>(Lifetime.Singleton);
             builder.Register<IBallLifecycleSystem, ITickable, BallLifecycleSystem>(Lifetime.Singleton);
+            builder.Register<INetworkRunnerCallbacks, NetworkConnectionMessagesHandler>(Lifetime.Singleton);
+            builder.Register<INetworkConnectionRunner, NetworkConnectionRunner>(Lifetime.Singleton);
+            builder.Register<INetworkConfigurationProvider, NetworkConfigurationProvider>(Lifetime.Singleton);
 
             builder.RegisterComponent(_monoBehavioursProvider).AsImplementedInterfaces();
         }
