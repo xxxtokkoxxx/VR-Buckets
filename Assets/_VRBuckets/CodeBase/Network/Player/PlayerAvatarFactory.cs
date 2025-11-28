@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using _VRBuckets.CodeBase.Data;
-using _VRBuckets.CodeBase.Infrastructure.Factory;
 using _VRBuckets.CodeBase.Services;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
-namespace _VRBuckets.CodeBase.GamePlay.Player
+namespace _VRBuckets.CodeBase.Network.Player
 {
-    public class PlayerFactory : BaseFactory, IPlayerFactory
+    public class PlayerAvatarFactory : IPlayerAvatarFactory
     {
         private PlayerAvatar _avatarReference;
         private List<PlayerAvatar> _createdAvatars = new();
         private readonly IAssetLoaderService _assetLoaderService;
 
-        public PlayerFactory(IAssetLoaderService assetLoaderService)
+        public PlayerAvatarFactory(IAssetLoaderService assetLoaderService)
         {
             _assetLoaderService = assetLoaderService;
         }
@@ -23,12 +20,10 @@ namespace _VRBuckets.CodeBase.GamePlay.Player
         {
             _avatarReference = await _assetLoaderService.LoadPrefab<PlayerAvatar>(AssetsDataPath.PlayerAvatar);
         }
+    }
 
-        public PlayerAvatar CreateAvatar(Guid id, Transform position)
-        {
-            PlayerAvatar avatar = Create(_avatarReference);
-            _createdAvatars.Add(avatar);
-            return avatar;
-        }
+    public interface IPlayerAvatarFactory
+    {
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Fusion;
+using UnityEngine;
 
 namespace _VRBuckets.CodeBase.Infrastructure.DI
 {
@@ -7,9 +8,12 @@ namespace _VRBuckets.CodeBase.Infrastructure.DI
         [SerializeField] private Transform _uiViewsParent;
         [SerializeField] private Camera _userMainCamera;
         [SerializeField] private Transform _groundTransform;
+        [SerializeField] private NetworkRunner _networkRunner;
 
         public Transform UIViewsParent => _uiViewsParent;
         public Camera UserCameraTransform => _userMainCamera;
         public Transform GroundTransform => _groundTransform;
+
+        public NetworkRunner NetworkRunner => _networkRunner;
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace _VRBuckets.CodeBase.GamePlay.Player
+namespace _VRBuckets.CodeBase.Network.Player
 {
     public class PlayerAvatar : MonoBehaviour
     {

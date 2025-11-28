@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace _VRBuckets.CodeBase.Data
 {
-    [CreateAssetMenu(fileName = "GameConfig", menuName = "Config/GameConfig", order = 0)]
+    [CreateAssetMenu(fileName = "GameConfiguration", menuName = "VR-Buckets/GameConfiguration", order = 0)]
     public class GameConfigSO : ScriptableObject
     {
         public float MatchTime;
