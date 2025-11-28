@@ -84,6 +84,8 @@ namespace _VRBuckets.CodeBase.UI.MainMenu
 
         private async void OnStartMultiPlayer()
         {
+            return;
+            //temporary disabled
             try
             {
                 await _networkConnectionRunner.Connect(_cancellationToken.Token);
