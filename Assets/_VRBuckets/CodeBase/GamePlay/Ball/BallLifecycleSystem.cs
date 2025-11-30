@@ -20,7 +20,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Ball
                 if (ball.BallState == BallState.NotControlled)
                 {
                     ball.ReleasedTime += Time.deltaTime;
-                    Debug.Log(ball.ReleasedTime);
+
                     if (ball.ReleasedTime > _timeToResetBall)
                     {
                         ball.SetBallState(BallState.Idle);
@@ -38,7 +38,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Ball
             }
         }
 
-        public void CleanUpBallsListener()
+        public void CleanUpListeners()
         {
             foreach (BallView ballView in _ballFactory.GetCreatedBalls())
             {

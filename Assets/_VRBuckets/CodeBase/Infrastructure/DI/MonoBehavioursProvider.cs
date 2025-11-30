@@ -13,7 +13,6 @@ namespace _VRBuckets.CodeBase.Infrastructure.DI
         public Transform UIViewsParent => _uiViewsParent;
         public Camera UserCameraTransform => _userMainCamera;
         public Transform GroundTransform => _groundTransform;
-
         public NetworkRunner NetworkRunner => _networkRunner;
     }
 }

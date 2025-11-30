@@ -6,7 +6,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Environment
 {
     public class BasketballCourtView : MonoBehaviour
     {
-        public Guid PlayerId { get; private set; }
+        public int PlayerId { get; private set; }
         public Transform PlayerInitPoint => _playerInitPoint;
         public Transform BallSpawnPoint => _ballSpawnPoint;
         public Transform[] HoopSpawnPoints => _hoopSpawnPoints;
@@ -17,7 +17,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Environment
 
         private int _currentHoopSpawnIndex = -1;
 
-        public void Initialize(Guid playerId)
+        public void Initialize(int playerId)
         {
             PlayerId = playerId;
         }

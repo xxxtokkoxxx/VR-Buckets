@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using _VRBuckets.CodeBase.Logging;
+using _VRBuckets.CodeBase.Network.Messaging.NetworkEvents;
 using Fusion;
 using Fusion.Sockets;
+using UnityEngine;
 
-namespace _VRBuckets.CodeBase.Network.Connection
+namespace _VRBuckets.CodeBase.Network.Messaging
 {
     public class NetworkConnectionMessagesHandler : INetworkRunnerCallbacks
     {
+        private readonly INetworkEventBus _networkEventBus;
+
+        public NetworkConnectionMessagesHandler(INetworkEventBus networkEventBus)
+        {
+            _networkEventBus = networkEventBus;
+        }
+
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
+            _networkEventBus.Publish(new PlayerJoinedEvent(player));
             AppLogger.Log(LogCategory.Network, "Player joined " + player.PlayerId);
         }
 
@@ -56,13 +66,19 @@ namespace _VRBuckets.CodeBase.Network.Connection
 
         public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
 
-        public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) { }
+        public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
+        {
+            Debug.Log("Sessions list updated, count: " + sessionList.Count);
+        }
 
         public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data) { }
 
         public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken) { }
 
-        public void OnSceneLoadDone(NetworkRunner runner) { }
+        public void OnSceneLoadDone(NetworkRunner runner)
+        {
+            Debug.Log("scene loaded");
+        }
 
         public void OnSceneLoadStart(NetworkRunner runner) { }
 

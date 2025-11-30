@@ -328,10 +328,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b65b1672d8bc114483cc962e30f42f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  referential: {fileID: 0}
-  positiveProximityThresholds: {x: 0.5, y: 0.5, z: 0.2}
-  negativeProximityThresholds: {x: -0.5, y: -0.5, z: -0.001}
-  maxDepth: 0.005
 --- !u!1 &336426667
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,6 +585,7 @@ MonoBehaviour:
   onLocalUserGrab:
     m_PersistentCalls:
       m_Calls: []
+  allowNonTransferableObject: 0
 --- !u!1001 &845278435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1217,6 +1214,7 @@ MonoBehaviour:
   onLocalUserGrab:
     m_PersistentCalls:
       m_Calls: []
+  allowNonTransferableObject: 0
 --- !u!114 &1519520476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1245,6 +1243,7 @@ MonoBehaviour:
   onLocalUserGrab:
     m_PersistentCalls:
       m_Calls: []
+  allowNonTransferableObject: 0
 --- !u!1 &1522956426
 GameObject:
   m_ObjectHideFlags: 0
@@ -2021,6 +2020,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5129027550807190590, guid: cbc278f1362dc7c4f9b07f9ea3007216, type: 3}
+      propertyPath: simulateHandForControllers
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8481154944603028024, guid: cbc278f1362dc7c4f9b07f9ea3007216, type: 3}
       propertyPath: m_Name
       value: XRITHardwareRig
@@ -2210,6 +2213,8 @@ MonoBehaviour:
   m_EnableXRInput: 1
   m_EnableMouseInput: 1
   m_EnableTouchInput: 1
+  m_EnableGamepadInput: 1
+  m_EnableJoystickInput: 1
   m_PointAction: {fileID: 2869410428622933342, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   m_LeftClickAction: {fileID: 1855836014308820768, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   m_MiddleClickAction: {fileID: -6289560987278519447, guid: c348712bda248c246b8c49b3db54643f, type: 3}
@@ -2219,8 +2224,6 @@ MonoBehaviour:
   m_SubmitAction: {fileID: 3994978066732806534, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   m_CancelAction: {fileID: 2387711382375263438, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   m_EnableBuiltinActionsAsFallback: 1
-  m_EnableGamepadInput: 1
-  m_EnableJoystickInput: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit

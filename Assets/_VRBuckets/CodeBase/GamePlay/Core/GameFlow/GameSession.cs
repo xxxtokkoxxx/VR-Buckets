@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using _VRBuckets.CodeBase.GamePlay.Ball;
 using _VRBuckets.CodeBase.GamePlay.Bucket;
 using _VRBuckets.CodeBase.GamePlay.Data;
@@ -9,6 +10,7 @@ using _VRBuckets.CodeBase.Infrastructure.DI;
 using _VRBuckets.CodeBase.Network.Player;
 using _VRBuckets.CodeBase.Services;
 using _VRBuckets.CodeBase.UI;
+using UnityEngine;
 
 namespace _VRBuckets.CodeBase.GamePlay.Core.GameFlow
 {
@@ -25,6 +27,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Core.GameFlow
         private readonly IUIService _uiService;
         private readonly IGameResultsContainer _gameResultsContainer;
         private readonly IBallLifecycleSystem _ballLifecycleSystem;
+        private readonly IPlayerRigFactory _playerRigFactory;
 
         public GameSession(IEnvironmentFactory environmentFactory,
             IBallFactory ballFactory, IHoopFactory hoopFactory,
@@ -32,7 +35,9 @@ namespace _VRBuckets.CodeBase.GamePlay.Core.GameFlow
             IPlayersContainer playersContainer,
             IGameplayProcessor gameplayProcessor,
             IUIService uiService,
-            IGameResultsContainer gameResultsContainer, IBallLifecycleSystem ballLifecycleSystem)
+            IGameResultsContainer gameResultsContainer,
+            IBallLifecycleSystem ballLifecycleSystem,
+            IPlayerRigFactory playerRigFactory)
         {
             _environmentFactory = environmentFactory;
             _ballFactory = ballFactory;
@@ -43,6 +48,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Core.GameFlow
             _uiService = uiService;
             _gameResultsContainer = gameResultsContainer;
             _ballLifecycleSystem = ballLifecycleSystem;
+            _playerRigFactory = playerRigFactory;
         }
 
         public void StartGame()
@@ -54,7 +60,8 @@ namespace _VRBuckets.CodeBase.GamePlay.Core.GameFlow
             }
 
             InitPlayers();
-            foreach (KeyValuePair<Guid, PlayerEntity> player in _playersContainer.GetPlayers())
+
+            foreach (KeyValuePair<int, PlayerEntity> player in _playersContainer.GetPlayers())
             {
                 BasketballCourtView court = _environmentFactory.CrateBasketballCourt(
                     _monoBehaviourProvider.UserCameraTransform.transform,
@@ -67,32 +74,31 @@ namespace _VRBuckets.CodeBase.GamePlay.Core.GameFlow
             _ballLifecycleSystem.SubscribeOnSelectBallActions();
         }
 
-        private void EndGame(Guid playerId)
+        private void EndGame()
         {
             _gameplayProcessor.OnGameFinished -= EndGame;
-            PlayerEntity player = _playersContainer.GetPlayer(playerId);
+            KeyValuePair<int, PlayerEntity> winner = _playersContainer.GetPlayers().OrderByDescending(a=>a.Value.Score).First();
 
             _gameResultsContainer.SetGameResults(new GameResults
             {
-                Scores = player.Score,
-                WinnerId = player.Id,
-                WinnerName = player.Name,
+                Scores = winner.Value.Score,
+                WinnerId = winner.Value.Id,
+                WinnerName = winner.Value.Name,
             });
 
             _isSubscribedOnGameFinished = false;
             _uiService.Show(ViewType.GameOver);
-            _ballLifecycleSystem.CleanUpBallsListener();
+            _ballLifecycleSystem.CleanUpListeners();
         }
 
         private void InitPlayers()
         {
-            _playersContainer.AddPlayer(new PlayerEntity
+            //if single player
+            //else
+            foreach (KeyValuePair<int, PlayerEntity> player in _playersContainer.GetPlayers())
             {
-                Id = Guid.NewGuid(),
-                Name = "Player 1",
-            });
-
-            _monoBehaviourProvider.UserCameraTransform.gameObject.AddComponent<PlayerAvatar>();
+                _playerRigFactory.CreateNetworkRig(Vector3.zero);
+            }
         }
     }
 }

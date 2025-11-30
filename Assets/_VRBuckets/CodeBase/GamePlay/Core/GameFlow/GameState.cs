@@ -3,6 +3,7 @@ using _VRBuckets.CodeBase.GamePlay.Bucket;
 using _VRBuckets.CodeBase.GamePlay.Environment;
 using _VRBuckets.CodeBase.GamePlay.Player;
 using _VRBuckets.CodeBase.Infrastructure.StateMachine;
+using _VRBuckets.CodeBase.Network.Player;
 using _VRBuckets.CodeBase.Services;
 using Cysharp.Threading.Tasks;
 
@@ -16,9 +17,11 @@ namespace _VRBuckets.CodeBase.GamePlay.Core.GameFlow
         private readonly IHoopFactory _hoopFactory;
         private readonly IUIService _uiService;
         private readonly IPlayersContainer _playersContainer;
+        private readonly IPlayerRigFactory _playerRigFactory;
 
         public GameState(IGameSession gameSession, IBallFactory ballFactory, IEnvironmentFactory environmentFactory,
-            IHoopFactory hoopFactory, IUIService uiService, IPlayersContainer playersContainer)
+            IHoopFactory hoopFactory, IUIService uiService, IPlayersContainer playersContainer,
+            IPlayerRigFactory playerRigFactory)
         {
             _gameSession = gameSession;
             _ballFactory = ballFactory;
@@ -26,6 +29,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Core.GameFlow
             _hoopFactory = hoopFactory;
             _uiService = uiService;
             _playersContainer = playersContainer;
+            _playerRigFactory = playerRigFactory;
         }
 
         public UniTask Enter(object payload)
@@ -41,6 +45,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Core.GameFlow
             _hoopFactory.Release();
             _uiService.HideAll();
             _playersContainer.ClearPlayers();
+            _playerRigFactory.Release();
 
             return UniTask.CompletedTask;
         }

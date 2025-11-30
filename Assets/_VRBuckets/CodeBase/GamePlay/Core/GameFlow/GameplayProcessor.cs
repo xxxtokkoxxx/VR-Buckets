@@ -10,7 +10,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Core.GameFlow
 {
     public class GameplayProcessor : IGameplayProcessor
     {
-        public event Action<Guid> OnGameFinished;
+        public event Action OnGameFinished;
 
         private readonly IGameplayConfiguration _gameplayConfiguration;
         private readonly IHoopFactory _hoopFactory;
@@ -26,7 +26,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Core.GameFlow
             _playersContainer = playersContainer;
         }
 
-        public void EnrollScore(Guid playerId, int score)
+        public void EnrollScore(int playerId, int score)
         {
             PlayerEntity playerEntity = _playersContainer.GetPlayer(playerId);
 
@@ -34,7 +34,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Core.GameFlow
             if (CheckIfPlayerWin(playerEntity))
             {
                 Debug.Log("Player win");
-                OnGameFinished?.Invoke(playerId);
+                OnGameFinished?.Invoke();
             }
             else
             {
@@ -42,7 +42,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Core.GameFlow
             }
         }
 
-        private void SpawnHoop(Guid playerId)
+        private void SpawnHoop(int playerId)
         {
             BasketballCourtView court = _environmentFactory.GetCourt(playerId);
             Transform hoopSpawnPoint = court.SelectRandomHoopSpawnPoint();

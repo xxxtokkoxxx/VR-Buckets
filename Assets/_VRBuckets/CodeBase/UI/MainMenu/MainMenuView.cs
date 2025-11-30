@@ -1,8 +1,12 @@
-﻿namespace _VRBuckets.CodeBase.UI.MainMenu
+﻿using UnityEngine;
+
+namespace _VRBuckets.CodeBase.UI.MainMenu
 {
     public class MainMenuView : BaseView
     {
         private MainMenuCallbacks _callbacks;
+        [SerializeField] private GameObject _searchingSessionPanel;
+
         public override ViewType ViewType => ViewType.MainMenu;
 
         public override void Show()
@@ -28,6 +32,11 @@
         public void StartMultiPlayer()
         {
             _callbacks.StartMultiPlayer();
+        }
+
+        public void SetSearchingSessionPanelEnabled(bool isEnabled)
+        {
+            _searchingSessionPanel.SetActive(isEnabled);
         }
     }
 }

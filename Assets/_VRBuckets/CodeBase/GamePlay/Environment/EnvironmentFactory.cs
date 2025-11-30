@@ -30,7 +30,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Environment
                 await _assetLoaderService.LoadPrefab<BasketballCourtView>(AssetsDataPath.Court);
         }
 
-        public BasketballCourtView CrateBasketballCourt(Transform position, Transform parent, Guid playerId)
+        public BasketballCourtView CrateBasketballCourt(Transform position, Transform parent, int playerId)
         {
             Vector3 userPos = _monoBehaviourProvider.UserCameraTransform.transform.position;
             Vector3 groundPos = _monoBehaviourProvider.GroundTransform.transform.position;
@@ -62,7 +62,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Environment
             _assetLoaderService.Release(_courtViewReference);
         }
 
-        public BasketballCourtView GetCourt(Guid playerId)
+        public BasketballCourtView GetCourt(int playerId)
         {
             BasketballCourtView court = _createdCourts.FirstOrDefault(a=>a.PlayerId == playerId);
 

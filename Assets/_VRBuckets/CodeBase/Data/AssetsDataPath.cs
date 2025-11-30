@@ -8,7 +8,7 @@
         public const string Hoop = "Hoop";
         public const string Court = "Court";
         public const string ResourceLocation = "ResourceLocation_";
-        public const string PlayerAvatar = "PlayerAvatar";
+        public const string PlayerNetworkRig = "PlayerNetworkRig";
         public const string GameConfig = "GameConfig";
         public const string NetworkConfiguration = "NetworkConfiguration";
 

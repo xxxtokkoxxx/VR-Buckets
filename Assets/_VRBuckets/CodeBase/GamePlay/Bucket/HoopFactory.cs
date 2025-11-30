@@ -12,7 +12,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Bucket
     public class HoopFactory : BaseFactory, IHoopFactory
     {
         private HoopView _hoopReference;
-        private Dictionary<Guid, HoopView> _cratedHoops = new();
+        private Dictionary<int, HoopView> _cratedHoops = new();
 
         private readonly IAssetLoaderService _assetLoaderService;
         private readonly IObjectResolver _resolver;
@@ -28,7 +28,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Bucket
             _hoopReference = await _assetLoaderService.LoadPrefab<HoopView>(AssetsDataPath.Hoop);
         }
 
-        public HoopView CreateHoop(Transform parent, Guid playerId)
+        public HoopView CreateHoop(Transform parent, int playerId)
         {
             bool hoopExists = _cratedHoops.TryGetValue(playerId, out HoopView cachedHoop);
 
@@ -47,7 +47,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Bucket
             _assetLoaderService.Release(_hoopReference);
         }
 
-        private HoopView CreateHoopInternal(Transform position, Guid playerId)
+        private HoopView CreateHoopInternal(Transform position, int playerId)
         {
             HoopView hoop = CreateWithDependencyInjection(_resolver, _hoopReference, position);
             hoop.Initialize(playerId);

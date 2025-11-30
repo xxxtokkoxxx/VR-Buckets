@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using _VRBuckets.CodeBase.Logging;
 
@@ -7,7 +6,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Player
 {
     public class PlayersContainer : IPlayersContainer
     {
-        private Dictionary<Guid, PlayerEntity> _players = new();
+        private Dictionary<int, PlayerEntity> _players = new();
 
         public void AddPlayer(PlayerEntity playerEntity)
         {
@@ -20,7 +19,12 @@ namespace _VRBuckets.CodeBase.GamePlay.Player
             _players.Add(playerEntity.Id, playerEntity);
         }
 
-        public PlayerEntity GetPlayer(Guid playerId)
+        public void RemovePlayer(int id)
+        {
+            _players.Remove(id);
+        }
+
+        public PlayerEntity GetPlayer(int playerId)
         {
             bool playerExists = _players.TryGetValue(playerId, out PlayerEntity player);
 
@@ -32,7 +36,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Player
             return player;
         }
 
-        public Dictionary<Guid, PlayerEntity> GetPlayers()
+        public Dictionary<int, PlayerEntity> GetPlayers()
         {
             return _players;
         }

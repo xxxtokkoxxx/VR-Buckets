@@ -5,6 +5,8 @@ using _VRBuckets.CodeBase.Infrastructure.DI;
 using _VRBuckets.CodeBase.Infrastructure.StateMachine;
 using _VRBuckets.CodeBase.Logging;
 using _VRBuckets.CodeBase.Network.Connection;
+using Cysharp.Threading.Tasks;
+using Fusion;
 
 namespace _VRBuckets.CodeBase.UI.MainMenu
 {
@@ -79,16 +81,21 @@ namespace _VRBuckets.CodeBase.UI.MainMenu
 
         private async void OnStartSinglePlayer()
         {
-            await _gameStateMachine.Enter<GamePreparationState>();
+            await ConnectGame(GameMode.Single);
         }
 
         private async void OnStartMultiPlayer()
         {
-            return;
-            //temporary disabled
+            await ConnectGame(GameMode.AutoHostOrClient);
+        }
+
+        private async UniTask ConnectGame(GameMode gameMode)
+        {
             try
             {
-                await _networkConnectionRunner.Connect(_cancellationToken.Token);
+                ShowSearchingSessionPanel(true);
+                await _networkConnectionRunner.Connect(gameMode, _cancellationToken.Token);
+                ShowSearchingSessionPanel(false);
             }
             catch (Exception e)
             {
@@ -98,6 +105,11 @@ namespace _VRBuckets.CodeBase.UI.MainMenu
             {
                 _cancellationToken.Dispose();
             }
+        }
+
+        private void ShowSearchingSessionPanel(bool isEnabled)
+        {
+            View.SetSearchingSessionPanelEnabled(isEnabled);
         }
     }
 }

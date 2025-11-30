@@ -1,5 +1,4 @@
-﻿using System;
-using _VRBuckets.CodeBase.GamePlay.Ball;
+﻿using _VRBuckets.CodeBase.GamePlay.Ball;
 using _VRBuckets.CodeBase.GamePlay.Core.GameFlow;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -9,11 +8,11 @@ namespace _VRBuckets.CodeBase.GamePlay.Bucket
 {
     public class HoopView : MonoBehaviour
     {
-        private Guid _playerId;
+        private int _playerId;
         private IGameplayProcessor _gameplayProcessor;
         private int _minScoreValue = 1;
 
-        public Guid PlayerId => _playerId;
+        public int PlayerId => _playerId;
 
         [Inject]
         public void Inject(IGameplayProcessor gameplayProcessor)
@@ -21,7 +20,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Bucket
             _gameplayProcessor = gameplayProcessor;
         }
 
-        public void Initialize(Guid playerId)
+        public void Initialize(int playerId)
         {
             _playerId = playerId;
         }
@@ -31,7 +30,7 @@ namespace _VRBuckets.CodeBase.GamePlay.Bucket
             Debug.Log("trigger enter " + other.gameObject.name);
             bool componentExists = other.gameObject.TryGetComponent(out BallView ballView);
 
-            if (_playerId != Guid.Empty && componentExists && ballView.PlayerId == _playerId)
+            if (componentExists && ballView.PlayerId == _playerId)
             {
                 _gameplayProcessor.EnrollScore(_playerId, _minScoreValue);
             }

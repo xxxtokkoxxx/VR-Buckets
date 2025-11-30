@@ -7,8 +7,8 @@ namespace _VRBuckets.CodeBase.GamePlay.Environment
     public interface IEnvironmentFactory
     {
         UniTask LoadEnvironment();
-        BasketballCourtView CrateBasketballCourt(Transform position, Transform parent, Guid playerId);
-        BasketballCourtView GetCourt(Guid playerId);
+        BasketballCourtView CrateBasketballCourt(Transform position, Transform parent, int playerId);
+        BasketballCourtView GetCourt(int playerId);
         void DestroyCourts();
         void Release();
     }

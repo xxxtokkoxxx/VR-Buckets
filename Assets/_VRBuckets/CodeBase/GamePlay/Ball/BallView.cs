@@ -1,11 +1,12 @@
 ﻿using System;
+using Fusion;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 namespace _VRBuckets.CodeBase.GamePlay.Ball
 {
-    public class BallView : MonoBehaviour
+    public class BallView : SimulationBehaviour
     {
         private Vector3 _startPosition;
         private Quaternion _startRotation;
@@ -14,12 +15,12 @@ namespace _VRBuckets.CodeBase.GamePlay.Ball
         [SerializeField] private Rigidbody _rigidbody;
 
         public int BounceCount { get; private set; }
-        public Guid PlayerId { get; private set; }
+        public int PlayerId { get; private set; }
         public float ReleasedTime { get; set; }
         public BallState BallState { get; private set; }
         public XRBaseInteractable Interactable => _interactable;
 
-        public void Initialize(Guid playerId)
+        public void Initialize(int playerId)
         {
             PlayerId = playerId;
             _startPosition = transform.localPosition;

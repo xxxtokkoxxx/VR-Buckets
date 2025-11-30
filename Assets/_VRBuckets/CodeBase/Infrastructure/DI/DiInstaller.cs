@@ -2,18 +2,20 @@
 using _VRBuckets.CodeBase.GamePlay.Ball;
 using _VRBuckets.CodeBase.GamePlay.Bucket;
 using _VRBuckets.CodeBase.GamePlay.Core.GameFlow;
-using _VRBuckets.CodeBase.GamePlay.Core.Preparation;
 using _VRBuckets.CodeBase.GamePlay.Data;
 using _VRBuckets.CodeBase.GamePlay.Environment;
 using _VRBuckets.CodeBase.GamePlay.Player;
 using _VRBuckets.CodeBase.Infrastructure.StateMachine;
 using _VRBuckets.CodeBase.Network.Configuration;
 using _VRBuckets.CodeBase.Network.Connection;
+using _VRBuckets.CodeBase.Network.Messaging;
+using _VRBuckets.CodeBase.Network.Player;
 using _VRBuckets.CodeBase.Services;
 using _VRBuckets.CodeBase.UI;
 using _VRBuckets.CodeBase.UI.GameOver;
 using _VRBuckets.CodeBase.UI.MainMenu;
 using Fusion;
+using Fusion.XR.Shared.Core;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -38,8 +40,8 @@ namespace _VRBuckets.CodeBase.Infrastructure.DI
             builder.Register<IEnvironmentFactory, EnvironmentFactory>(Lifetime.Singleton);
             builder.Register<IState, BootstrapState>(Lifetime.Singleton);
             builder.Register<IState, MainMenuState>(Lifetime.Singleton);
-            builder.Register<IState, GamePreparationState>(Lifetime.Singleton);
             builder.Register<IState, GameState>(Lifetime.Singleton);
+            builder.Register<IState, GamePreparationState>(Lifetime.Singleton);
             builder.Register<IGameSession, GameSession>(Lifetime.Singleton);
             builder.Register<IGameplayProcessor, GameplayProcessor>(Lifetime.Singleton);
             builder.Register<IGameplayConfiguration, GameplayConfiguration>(Lifetime.Singleton);
@@ -50,6 +52,8 @@ namespace _VRBuckets.CodeBase.Infrastructure.DI
             builder.Register<INetworkRunnerCallbacks, NetworkConnectionMessagesHandler>(Lifetime.Singleton);
             builder.Register<INetworkConnectionRunner, NetworkConnectionRunner>(Lifetime.Singleton);
             builder.Register<INetworkConfigurationProvider, NetworkConfigurationProvider>(Lifetime.Singleton);
+            builder.Register<INetworkEventBus, NetworkEventBus>(Lifetime.Singleton);
+            builder.Register<IPlayerRigFactory, PlayerRigFactory>(Lifetime.Singleton);
 
             builder.RegisterComponent(_monoBehavioursProvider).AsImplementedInterfaces();
         }

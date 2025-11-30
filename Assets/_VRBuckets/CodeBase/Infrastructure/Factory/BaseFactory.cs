@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Fusion;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -11,6 +12,13 @@ namespace _VRBuckets.CodeBase.Infrastructure.Factory
         {
             TObject obj = Object.Instantiate(gameObject, parent);
 
+            return obj;
+        }
+
+        protected TObject CreateNetworkObject<TObject>(NetworkRunner runner, TObject gameObject, Vector3 position, Quaternion rotation)
+            where TObject : SimulationBehaviour
+        {
+            TObject obj = runner.Spawn(gameObject, position, rotation);
             return obj;
         }
 
