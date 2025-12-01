@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading;
-using _VRBuckets.CodeBase.GamePlay.Core.Preparation;
 using _VRBuckets.CodeBase.Infrastructure.DI;
-using _VRBuckets.CodeBase.Infrastructure.StateMachine;
 using _VRBuckets.CodeBase.Logging;
 using _VRBuckets.CodeBase.Network.Connection;
 using Cysharp.Threading.Tasks;
@@ -19,17 +17,14 @@ namespace _VRBuckets.CodeBase.UI.MainMenu
 
         private readonly IUIViewsFactory _viewsFactory;
         private readonly IMonoBehaviourProvider _monoBehaviourProvider;
-        private readonly IGameStateMachine _gameStateMachine;
         private readonly INetworkConnectionRunner _networkConnectionRunner;
 
         public MainMenuController(IUIViewsFactory viewsFactory,
             IMonoBehaviourProvider monoBehaviourProvider,
-            IGameStateMachine gameStateMachine,
             INetworkConnectionRunner networkConnectionRunner)
         {
             _viewsFactory = viewsFactory;
             _monoBehaviourProvider = monoBehaviourProvider;
-            _gameStateMachine = gameStateMachine;
             _networkConnectionRunner = networkConnectionRunner;
         }
 
@@ -70,12 +65,15 @@ namespace _VRBuckets.CodeBase.UI.MainMenu
 
             _callbacks.OnStartMultiPlayer += OnStartMultiPlayer;
             _callbacks.OnStartSinglePlayer += OnStartSinglePlayer;
+            _callbacks.OnCancelSearchingGame += CancelSearchingGame;
         }
 
         private void Unsubscribe()
         {
             _callbacks.OnStartMultiPlayer -= OnStartMultiPlayer;
             _callbacks.OnStartSinglePlayer -= OnStartSinglePlayer;
+            _callbacks.OnCancelSearchingGame -= CancelSearchingGame;
+
             _subscribed = false;
         }
 
@@ -93,9 +91,10 @@ namespace _VRBuckets.CodeBase.UI.MainMenu
         {
             try
             {
-                ShowSearchingSessionPanel(true);
+                _cancellationToken = new CancellationTokenSource();
+                View.SetSearchingSessionPanelEnabled(true);
                 await _networkConnectionRunner.Connect(gameMode, _cancellationToken.Token);
-                ShowSearchingSessionPanel(false);
+                View.SetSearchingSessionPanelEnabled(false);
             }
             catch (Exception e)
             {
@@ -107,9 +106,10 @@ namespace _VRBuckets.CodeBase.UI.MainMenu
             }
         }
 
-        private void ShowSearchingSessionPanel(bool isEnabled)
+        private void CancelSearchingGame()
         {
-            View.SetSearchingSessionPanelEnabled(isEnabled);
+            _cancellationToken.Cancel();
+            View.SetSearchingSessionPanelEnabled(false);
         }
     }
 }

@@ -7,6 +7,8 @@ namespace _VRBuckets.CodeBase.UI.MainMenu
         public event Action OnStartSinglePlayer;
         public event Action OnStartMultiPlayer;
 
+        public event Action OnCancelSearchingGame;
+
         public void StartSinglePlayer()
         {
             OnStartSinglePlayer?.Invoke();
@@ -15,6 +17,11 @@ namespace _VRBuckets.CodeBase.UI.MainMenu
         public void StartMultiPlayer()
         {
             OnStartMultiPlayer?.Invoke();
+        }
+
+        public void CancelSearchingGame()
+        {
+            OnCancelSearchingGame?.Invoke();
         }
     }
 }

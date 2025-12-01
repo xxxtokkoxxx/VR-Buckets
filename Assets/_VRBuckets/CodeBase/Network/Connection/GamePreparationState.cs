@@ -19,7 +19,6 @@ namespace _VRBuckets.CodeBase.Network.Connection
         private readonly IGameStateMachine _stateMachine;
         private readonly IUIService _uiService;
         private readonly IGameplayConfiguration _gameplayConfiguration;
-        private readonly INetworkConnectionRunner _networkConnectionRunner;
         private readonly IPlayerRigFactory _playerRigFactory;
 
         public GamePreparationState(IEnvironmentFactory environmentFactory,
@@ -28,7 +27,6 @@ namespace _VRBuckets.CodeBase.Network.Connection
             IGameStateMachine stateMachine,
             IUIService uiService,
             IGameplayConfiguration gameplayConfiguration,
-            INetworkConnectionRunner networkConnectionRunner,
             IPlayerRigFactory playerRigFactory)
         {
             _environmentFactory = environmentFactory;
@@ -37,7 +35,6 @@ namespace _VRBuckets.CodeBase.Network.Connection
             _stateMachine = stateMachine;
             _uiService = uiService;
             _gameplayConfiguration = gameplayConfiguration;
-            _networkConnectionRunner = networkConnectionRunner;
             _playerRigFactory = playerRigFactory;
         }
 
@@ -65,7 +62,7 @@ namespace _VRBuckets.CodeBase.Network.Connection
 
         private async UniTask LoadGameScene()
         {
-            await _networkConnectionRunner.NetworkRunner.LoadScene(SceneNames.Game);
+            await NetworkRunnerProvider.NetworkRunner.LoadScene(SceneNames.Game);
         }
     }
 }

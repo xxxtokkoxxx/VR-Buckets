@@ -7,5 +7,6 @@ namespace _VRBuckets.CodeBase.Network.Messaging
         void Subscribe<TEvent>(Action<TEvent> handler) where TEvent : INetworkEvent;
         void Unsubscribe<TEvent>(Action<TEvent> handler) where TEvent : INetworkEvent;
         void Publish<TEvent>(TEvent eventData) where TEvent : INetworkEvent;
+        void RemoveAllSubscriptions();
     }
 }

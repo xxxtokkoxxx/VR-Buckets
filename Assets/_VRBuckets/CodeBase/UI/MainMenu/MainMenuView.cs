@@ -4,8 +4,10 @@ namespace _VRBuckets.CodeBase.UI.MainMenu
 {
     public class MainMenuView : BaseView
     {
-        private MainMenuCallbacks _callbacks;
         [SerializeField] private GameObject _searchingSessionPanel;
+        [SerializeField] private GameObject _mainMenuPanel;
+
+        private MainMenuCallbacks _callbacks;
 
         public override ViewType ViewType => ViewType.MainMenu;
 
@@ -37,6 +39,12 @@ namespace _VRBuckets.CodeBase.UI.MainMenu
         public void SetSearchingSessionPanelEnabled(bool isEnabled)
         {
             _searchingSessionPanel.SetActive(isEnabled);
+            _mainMenuPanel.SetActive(!isEnabled);
+        }
+
+        public void CancelSearchingGame()
+        {
+            _callbacks.CancelSearchingGame();
         }
     }
 }

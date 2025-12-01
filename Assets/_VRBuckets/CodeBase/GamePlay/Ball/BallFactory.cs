@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using _VRBuckets.CodeBase.Data;
 using _VRBuckets.CodeBase.Infrastructure.Factory;
-using _VRBuckets.CodeBase.Network.Connection;
 using _VRBuckets.CodeBase.Services;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -12,14 +10,12 @@ namespace _VRBuckets.CodeBase.GamePlay.Ball
     public class BallFactory : BaseFactory, IBallFactory
     {
         private readonly IAssetLoaderService _assetLoaderService;
-        private readonly INetworkConnectionRunner _networkConnectionRunner;
         private BallView _ballReference;
         private List<BallView> _createdBalls = new();
 
-        public BallFactory(IAssetLoaderService assetLoaderService, INetworkConnectionRunner networkConnectionRunner)
+        public BallFactory(IAssetLoaderService assetLoaderService)
         {
             _assetLoaderService = assetLoaderService;
-            _networkConnectionRunner = networkConnectionRunner;
         }
 
         public async UniTask LoadBallReference()
@@ -30,10 +26,8 @@ namespace _VRBuckets.CodeBase.GamePlay.Ball
         public BallView CreateBall(Transform position, int playerId)
         {
             Debug.Log("call CreateBall, ball reference " + _ballReference);
-            BallView ball = CreateNetworkObject(_networkConnectionRunner.NetworkRunner, _ballReference,
-                position.position, Quaternion.identity);
+            BallView ball = CreateNetworkObject(_ballReference, position.position, Quaternion.identity);
 
-            // BallView ball = Create(_ballReference, position);
             ball.Initialize(playerId);
             _createdBalls.Add(ball);
 

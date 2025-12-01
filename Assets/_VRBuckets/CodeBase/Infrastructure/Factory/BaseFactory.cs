@@ -1,4 +1,5 @@
-﻿using Fusion;
+﻿using _VRBuckets.CodeBase.Network.Connection;
+using Fusion;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -15,10 +16,10 @@ namespace _VRBuckets.CodeBase.Infrastructure.Factory
             return obj;
         }
 
-        protected TObject CreateNetworkObject<TObject>(NetworkRunner runner, TObject gameObject, Vector3 position, Quaternion rotation)
+        protected TObject CreateNetworkObject<TObject>(TObject gameObject, Vector3 position, Quaternion rotation)
             where TObject : SimulationBehaviour
         {
-            TObject obj = runner.Spawn(gameObject, position, rotation);
+            TObject obj = NetworkRunnerProvider.NetworkRunner.Spawn(gameObject, position, rotation);
             return obj;
         }
 

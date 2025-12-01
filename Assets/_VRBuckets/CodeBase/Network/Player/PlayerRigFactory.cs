@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using _VRBuckets.CodeBase.Data;
 using _VRBuckets.CodeBase.Infrastructure.Factory;
-using _VRBuckets.CodeBase.Network.Connection;
 using _VRBuckets.CodeBase.Services;
 using Cysharp.Threading.Tasks;
 using Fusion.XR.Shared.Core;
@@ -15,13 +14,10 @@ namespace _VRBuckets.CodeBase.Network.Player
         private List<NetworkRig> _createdRigs = new();
 
         private readonly IAssetLoaderService _assetLoaderService;
-        private readonly INetworkConnectionRunner _networkConnectionRunner;
 
-        public PlayerRigFactory(IAssetLoaderService assetLoaderService,
-            INetworkConnectionRunner networkConnectionRunner)
+        public PlayerRigFactory(IAssetLoaderService assetLoaderService)
         {
             _assetLoaderService = assetLoaderService;
-            _networkConnectionRunner = networkConnectionRunner;
         }
 
         public async UniTask LoadNetworkRig()
@@ -31,7 +27,7 @@ namespace _VRBuckets.CodeBase.Network.Player
 
         public NetworkRig CreateNetworkRig(Vector3 position)
         {
-            NetworkRig rig = CreateNetworkObject(_networkConnectionRunner.NetworkRunner, _networkRigReference, position,
+            NetworkRig rig = CreateNetworkObject(_networkRigReference, position,
                 Quaternion.identity);
 
             _createdRigs.Add(rig);

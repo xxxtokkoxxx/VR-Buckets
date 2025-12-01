@@ -6,8 +6,6 @@ namespace _VRBuckets.CodeBase.Network.Connection
 {
     public interface INetworkConnectionRunner
     {
-        void Initialize(NetworkRunner networkRunner);
         UniTask Connect(GameMode gameMode, CancellationToken token);
-        NetworkRunner NetworkRunner { get; }
     }
 }

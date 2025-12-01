@@ -1,4 +1,3 @@
-using Fusion;
 using UnityEngine;
 
 namespace _VRBuckets.CodeBase.Infrastructure.DI
@@ -8,6 +7,5 @@ namespace _VRBuckets.CodeBase.Infrastructure.DI
         Transform UIViewsParent { get; }
         Camera UserCameraTransform { get; }
         Transform GroundTransform { get; }
-        NetworkRunner NetworkRunner { get; }
     }
 }

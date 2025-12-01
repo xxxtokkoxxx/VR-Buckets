@@ -14,8 +14,6 @@ namespace _VRBuckets.CodeBase.Network.Connection
 {
     public class NetworkConnectionRunner : INetworkConnectionRunner
     {
-        private NetworkRunner _networkRunner;
-
         private readonly INetworkRunnerCallbacks _networkRunnerCallbacks;
         private readonly INetworkConfigurationProvider _networkConfigurationProvider;
         private readonly INetworkEventBus _networkEventBus;
@@ -36,19 +34,13 @@ namespace _VRBuckets.CodeBase.Network.Connection
             _playersContainer = playersContainer;
         }
 
-        public NetworkRunner NetworkRunner => _networkRunner;
-
-        public void Initialize(NetworkRunner networkRunner)
-        {
-            _networkRunner = networkRunner;
-            _networkRunner.AddCallbacks(_networkRunnerCallbacks);
-
-            _networkEventBus.Subscribe<PlayerJoinedEvent>(PlayerConnected);
-            _networkEventBus.Subscribe<PlayerDisconnectedEvent>(PlayerDisconnected);
-        }
-
         public async UniTask Connect(GameMode gameMode, CancellationToken token)
         {
+            SubscribeOnNetworkEvents();
+
+            NetworkRunnerProvider.NetworkRunner.RemoveCallbacks(_networkRunnerCallbacks);
+            NetworkRunnerProvider.NetworkRunner.AddCallbacks(_networkRunnerCallbacks);
+
             _playersCount = 1;
 
             int playersCount = gameMode == GameMode.Single
@@ -63,19 +55,13 @@ namespace _VRBuckets.CodeBase.Network.Connection
                 StartGameCancellationToken = token
             };
 
-            await _networkRunner.StartGame(gameArgs);
-        }
-
-        public void Dispose()
-        {
-            _networkEventBus.Unsubscribe<PlayerJoinedEvent>(PlayerConnected);
-            _networkEventBus.Unsubscribe<PlayerDisconnectedEvent>(PlayerDisconnected);
+            await NetworkRunnerProvider.NetworkRunner.StartGame(gameArgs);
         }
 
         private void PlayerConnected(PlayerJoinedEvent networkEvent)
         {
             AppLogger.Log(LogCategory.Network, "Player joined");
-            Debug.Log("network runner session " + _networkRunner.SessionInfo.PlayerCount + " connected");
+            Debug.Log("network runner session " + NetworkRunnerProvider.NetworkRunner.SessionInfo.PlayerCount + " connected");
             _gameStateMachine.Enter<GamePreparationState>();
             _playersContainer.AddPlayer(new PlayerEntity($"Player {networkEvent.Player.PlayerId}",
                 networkEvent.Player.PlayerId, networkEvent.Player));
@@ -84,8 +70,15 @@ namespace _VRBuckets.CodeBase.Network.Connection
         private void PlayerDisconnected(PlayerDisconnectedEvent networkEvent)
         {
             AppLogger.Log(LogCategory.Network, "Player disconnected");
-            Debug.Log("network runner session " + _networkRunner.SessionInfo.PlayerCount + " disconnected");
+            Debug.Log("network runner session " + NetworkRunnerProvider.NetworkRunner.SessionInfo.PlayerCount + " disconnected");
             _playersContainer.RemovePlayer(networkEvent.Player.PlayerId);
+        }
+
+        private void SubscribeOnNetworkEvents()
+        {
+            _networkEventBus.RemoveAllSubscriptions();
+            _networkEventBus.Subscribe<PlayerJoinedEvent>(PlayerConnected);
+            _networkEventBus.Subscribe<PlayerDisconnectedEvent>(PlayerDisconnected);
         }
     }
 }

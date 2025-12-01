@@ -54,5 +54,10 @@ namespace _VRBuckets.CodeBase.Network.Messaging
                 }
             }
         }
+
+        public void RemoveAllSubscriptions()
+        {
+            _eventHandlers.Clear();
+        }
     }
 }
